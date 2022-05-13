@@ -77,7 +77,7 @@ body {
 }
 
 .btn {
-  border: 0;
+  border: none;
   font-family: inherit;
   font-size: 1.4rem;
   font-weight: 700;
@@ -86,4 +86,30 @@ body {
   cursor: pointer;
   color: var(--primary-dark);
   background-color: var(--primary-light);
-} 
+}
+
+.books {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 18px;
+  margin-top: 3.6rem;
+}
+
+.book {
+  display: flex;
+  flex-direction: column;
+  padding: 1.6rem;
+  color: var(--primary-dark);
+  background-color: var(--primary-light);
+  border-radius: 3px;
+}
+
+.book > h2 {
+  font-size: 2.2rem;
+  line-height: 1;
+  margin-bottom: 1.8rem;
+}
+
+.book > p {
+  margin-bottom: 1.2rem;
+}
