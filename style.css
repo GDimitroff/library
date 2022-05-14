@@ -126,3 +126,18 @@ body {
   font-size: 1.4rem;
   text-align: center;
 }
+
+.footer i {
+  color: var(--primary-green);
+}
+
+a:link,
+a:visited {
+  text-decoration: none;
+  color: var(--primary-green);
+}
+
+a:hover,
+a:active {
+  text-decoration: underline;
+}
