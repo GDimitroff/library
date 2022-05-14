@@ -248,3 +248,56 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+@media (max-width: 59em) {
+  html {
+    font-size: 56.25%;
+  }
+
+  .header {
+    gap: 18px;
+  }
+
+  .logo-container {
+    flex-shrink: 1;
+  }
+
+  .stats {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 44em) {
+  body {
+    padding: 2rem 2rem 1rem 2rem;
+    gap: 12px;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .logo-container {
+    text-align: center;
+    padding: 3rem 0;
+  }
+
+  .logo {
+    justify-content: center;
+  }
+
+  .stats {
+    width: 100%;
+    justify-content: space-evenly;
+    padding: 0.8rem 2.6rem;
+  }
+
+  .stats > div:not(:last-child) {
+    padding-right: 0;
+    border: none;
+  }
+
+  .books {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
