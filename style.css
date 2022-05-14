@@ -52,9 +52,10 @@ body {
 .stats {
   display: flex;
   gap: 28px;
-  border: 2px solid var(--primary-green);
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
   border-radius: 3px;
-  padding: 1.2rem 3.6rem;
+  padding: 0.8rem 3.6rem;
   user-select: none;
 }
 
@@ -64,7 +65,16 @@ body {
 
 .stats > div:not(:last-child) {
   padding-right: 2.8rem;
-  border-right: 2px dotted var(--primary-green);
+  border-right: 1px solid var(--primary-dark);
+}
+
+.stats-item > p:first-child {
+  font-size: 1.4rem;
+}
+
+.stats-item > p:last-child {
+  font-size: 2rem;
+  font-weight: 700;
 }
 
 .menu {
