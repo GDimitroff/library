@@ -253,8 +253,8 @@ input:checked + .slider:before {
   position: absolute;
   top: 50%;
   left: 50%;
+  min-width: 30rem;
   transform: translate(-50%, -50%) scale(0);
-  padding: 2rem;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
     rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
     rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
@@ -262,6 +262,7 @@ input:checked + .slider:before {
   z-index: 2;
   background: var(--primary-light);
   transition: 0.5s ease;
+  pointer-events: auto;
 }
 
 .modal.active {
@@ -283,6 +284,43 @@ input:checked + .slider:before {
 .overlay.active {
   opacity: 1;
   pointer-events: auto;
+}
+
+.form-container {
+  padding: 3rem;
+  color: var(--primary-dark);
+}
+
+.form-container > h2 {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+}
+
+.input > label {
+  font-size: 1.4rem;
+}
+
+.input > input {
+  border: 1px solid var(--primary-dark);
+  border-radius: 3px;
+  height: 25px;
+}
+
+.input > input::placeholder {
+  position: absolute;
+  top: 5px;
+  left: 3px;
 }
 
 @media (max-width: 59em) {
