@@ -94,8 +94,13 @@ body {
   padding: 0.8rem 1.6rem;
   border-radius: 3px;
   cursor: pointer;
-  color: var(--primary-dark);
-  background-color: var(--primary-light);
+  background-color: var(--primary-dark);
+  color: var(--primary-light);
+  transition: all 0.4s ease-in-out;
+}
+
+.btn:hover {
+  background-color: var(--secondary-dark);
 }
 
 .books {
@@ -212,10 +217,10 @@ a:active {
 .slider:before {
   position: absolute;
   content: '';
-  height: 14px;
-  width: 14px;
-  left: 6px;
-  bottom: 4px;
+  height: 18px;
+  width: 18px;
+  left: 2px;
+  bottom: 2px;
   background-color: var(--primary-light);
   -webkit-transition: 0.4s;
   transition: 0.4s;
@@ -230,9 +235,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(22px);
-  -ms-transform: translateX(22px);
-  transform: translateX(22px);
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
 }
 
 /* Rounded sliders */
