@@ -17,18 +17,21 @@ html {
 
 body {
   min-height: 100vh;
+  max-width: 1140px;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 36px;
   font-size: 1.6rem;
   color: var(--primary-light);
   background: linear-gradient(to top, #4b79a1, #283e51);
+  padding: 5.6rem 2rem 2rem 2rem;
+  margin: 0 auto;
 }
 
 .header {
-  max-width: 1140px;
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-top: 7.6rem;
 }
 
 .logo {
@@ -64,16 +67,10 @@ body {
   border-right: 2px dotted var(--primary-green);
 }
 
-.main {
-  max-width: 1140px;
-  margin: 0 auto;
-}
-
 .menu {
   background-color: var(--primary-green);
   border-radius: 3px;
   padding: 1rem;
-  margin-top: 3.6rem;
 }
 
 .btn {
@@ -90,9 +87,9 @@ body {
 
 .books {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 18px;
-  margin-top: 3.6rem;
+  margin-top: 1.4rem;
 }
 
 .book {
@@ -112,4 +109,10 @@ body {
 
 .book > p {
   margin-bottom: 1.2rem;
+}
+
+.footer {
+  grid-row: 3;
+  font-size: 1.4rem;
+  text-align: center;
 }
