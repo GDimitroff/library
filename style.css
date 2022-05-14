@@ -1,5 +1,6 @@
 :root {
   --primary-light: #f8fafc;
+  --secondary-light: #e2e8f0;
   --primary-dark: #334155;
   --secondary-dark: #64748b;
   --primary-green: #84cc16;
@@ -111,16 +112,34 @@ body {
   color: var(--primary-dark);
   background-color: var(--primary-light);
   border-radius: 3px;
+  transition: all 0.4s;
 }
 
-.book > h2 {
+.book:hover {
+  background-color: var(--secondary-light);
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+}
+
+.book header {
+  margin-bottom: 2.2rem;
+}
+
+.book header > h2 {
   font-size: 2.2rem;
   line-height: 1;
-  margin-bottom: 1.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.book header > p {
+  font-size: 1.4rem;
+  color: var(--secondary-dark);
 }
 
 .book > p {
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.6rem;
 }
 
 .book > div {
