@@ -52,7 +52,7 @@ function addBookToLibrary(book) {
     <p>Published: ${book.published}</p>
     <div>
       <label class="switch">
-        <input type="checkbox" ${book.read ? 'checked' : ''} />
+        <input type="checkbox" ${book.read ? 'checked' : ''} tabindex="-1"/>
         <span class="slider round"></span>
       </label>
       <i class="fa-solid fa-trash"></i>
@@ -65,6 +65,7 @@ function addBookToLibrary(book) {
 function updateStats() {}
 
 function openModal(e) {
+  form.children[0].children[0].focus();
   body.style.pointerEvents = 'none';
   body.style.overflow = 'hidden';
   overlay.classList.add('active');
