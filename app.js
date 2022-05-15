@@ -5,8 +5,28 @@ const addBtn = body.querySelector('.btn-add');
 const overlay = body.querySelector('.overlay');
 const modal = body.querySelector('.modal');
 const form = body.querySelector('.form');
+const booksCount = body.querySelector('.books-count');
+const readCount = body.querySelector('.read-count');
+const notReadCount = body.querySelector('.not-read-count');
 
-let myLibrary = [];
+let myLibrary = [
+  {
+    title: 'Dune',
+    author: 'Frank Herbert',
+    pages: '879',
+    language: 'English',
+    published: '1988',
+    read: false,
+  },
+  {
+    title: 'The Lord of the Rings',
+    author: 'J. R. R. Tolkien',
+    pages: '1300',
+    language: 'English',
+    published: '1978',
+    read: true,
+  },
+];
 
 class Book {
   constructor(title, author, pages, language, published, read) {
@@ -18,6 +38,13 @@ class Book {
     this.read = read;
   }
 }
+
+function loadBooks() {
+  myLibrary.forEach((book) => renderBook(book));
+  updateStats();
+}
+
+loadBooks();
 
 addBtn.addEventListener('click', openModal);
 overlay.addEventListener('click', closeModal);
@@ -37,9 +64,7 @@ form.addEventListener('submit', (e) => {
   closeModal();
 });
 
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-
+function renderBook(book) {
   const div = document.createElement('div');
   div.classList.add('book');
   div.innerHTML = `
@@ -62,7 +87,26 @@ function addBookToLibrary(book) {
   books.appendChild(div);
 }
 
-function updateStats() {}
+function addBookToLibrary(book) {
+  myLibrary.push(book);
+  renderBook(book);
+  updateStats();
+}
+
+function updateStats() {
+  let booksCountNumber = 0;
+  let readCountNumber = 0;
+  myLibrary.forEach((book) => {
+    booksCountNumber++;
+    if (book.read) {
+      readCountNumber++;
+    }
+  });
+
+  booksCount.textContent = booksCountNumber;
+  readCount.textContent = readCountNumber;
+  notReadCount.textContent = booksCountNumber - readCountNumber;
+}
 
 function openModal(e) {
   form.children[0].children[0].focus();
