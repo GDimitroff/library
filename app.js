@@ -14,8 +14,7 @@ class Book {
 if (localStorage.getItem('books') === null) {
   myLibrary = [];
 } else {
-  const booksFromStorage = JSON.parse(localStorage.getItem('books'));
-  myLibrary = booksFromStorage;
+  myLibrary = JSON.parse(localStorage.getItem('books'));
 }
 
 const body = document.querySelector('body');
@@ -38,6 +37,11 @@ loadBooks();
 
 addBtn.addEventListener('click', openModal);
 overlay.addEventListener('click', closeModal);
+window.addEventListener('keydown', handleKeyboardInput);
+
+function handleKeyboardInput(e) {
+  if (e.key === 'Escape') closeModal();
+}
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -75,8 +79,8 @@ function renderBook(book, id) {
     </div>
   `;
 
-  books.appendChild(bookDiv);
   bookDiv.addEventListener('change', updateStatus);
+  books.appendChild(bookDiv);
 }
 
 function addBookToLibrary(book) {
