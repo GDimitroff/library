@@ -1,3 +1,16 @@
+let myLibrary = [];
+
+class Book {
+  constructor(title, author, pages, language, published, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.language = language;
+    this.published = published;
+    this.status = status;
+  }
+}
+
 const body = document.querySelector('body');
 const books = body.querySelector('.books');
 const stats = body.querySelector('.stats');
@@ -9,43 +22,6 @@ const booksCount = body.querySelector('.books-count');
 const readCount = body.querySelector('.read-count');
 const notReadCount = body.querySelector('.not-read-count');
 
-let myLibrary = [
-  {
-    title: 'Dune',
-    author: 'Frank Herbert',
-    pages: '879',
-    language: 'English',
-    published: '1988',
-    read: false,
-  },
-  {
-    title: 'The Lord of the Rings',
-    author: 'J. R. R. Tolkien',
-    pages: '1300',
-    language: 'English',
-    published: '1978',
-    read: true,
-  },
-];
-
-class Book {
-  constructor(title, author, pages, language, published, read) {
-    this.title = title;
-    this.author = author;
-    this.pages = pages;
-    this.language = language;
-    this.published = published;
-    this.read = read;
-  }
-}
-
-function loadBooks() {
-  myLibrary.forEach((book) => renderBook(book));
-  updateStats();
-}
-
-loadBooks();
-
 addBtn.addEventListener('click', openModal);
 overlay.addEventListener('click', closeModal);
 
@@ -53,10 +29,10 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);
-  const { title, author, pages, language, published, read } =
+  const { title, author, pages, language, published, status } =
     Object.fromEntries(formData);
-  const book = new Book(title, author, pages, language, published, read);
-  book.read = book.read ? true : false;
+  const book = new Book(title, author, pages, language, published, status);
+  book.status = book.status ? true : false;
 
   addBookToLibrary(book);
   updateStats();
@@ -65,9 +41,9 @@ form.addEventListener('submit', (e) => {
 });
 
 function renderBook(book) {
-  const div = document.createElement('div');
-  div.classList.add('book');
-  div.innerHTML = `
+  const bookDiv = document.createElement('div');
+  bookDiv.classList.add('book');
+  bookDiv.innerHTML = `
     <header>
       <h2>${book.title}</h2>
       <p>${book.author}t</p>
@@ -77,14 +53,17 @@ function renderBook(book) {
     <p>Published: ${book.published}</p>
     <div>
       <label class="switch">
-        <input type="checkbox" ${book.read ? 'checked' : ''} tabindex="-1"/>
+        <input type="checkbox" ${
+          book.status ? 'checked' : ''
+        } tabindex="-1" data-id="${myLibrary.length}"/>
         <span class="slider round"></span>
       </label>
       <i class="fa-solid fa-trash"></i>
     </div>
   `;
 
-  books.appendChild(div);
+  books.appendChild(bookDiv);
+  bookDiv.addEventListener('change', updateStatus);
 }
 
 function addBookToLibrary(book) {
@@ -106,6 +85,11 @@ function updateStats() {
   booksCount.textContent = booksCountNumber;
   readCount.textContent = readCountNumber;
   notReadCount.textContent = booksCountNumber - readCountNumber;
+}
+
+function updateStatus(e) {
+  const id = e.target.dataset.id;
+  myLibrary[id - 1].status = !myLibrary[id - 1].status;
 }
 
 function openModal(e) {
