@@ -11,6 +11,13 @@ class Book {
   }
 }
 
+if (localStorage.getItem('books') === null) {
+  myLibrary = [];
+} else {
+  const booksFromStorage = JSON.parse(localStorage.getItem('books'));
+  myLibrary = booksFromStorage;
+}
+
 const body = document.querySelector('body');
 const books = body.querySelector('.books');
 const stats = body.querySelector('.stats');
@@ -21,6 +28,13 @@ const form = body.querySelector('.form');
 const booksCount = body.querySelector('.books-count');
 const readCount = body.querySelector('.read-count');
 const notReadCount = body.querySelector('.not-read-count');
+
+function loadBooks() {
+  myLibrary.forEach((book, index) => renderBook(book, index));
+  updateStats();
+}
+
+loadBooks();
 
 addBtn.addEventListener('click', openModal);
 overlay.addEventListener('click', closeModal);
@@ -35,12 +49,11 @@ form.addEventListener('submit', (e) => {
   book.status = book.status ? true : false;
 
   addBookToLibrary(book);
-  updateStats();
   form.reset();
   closeModal();
 });
 
-function renderBook(book) {
+function renderBook(book, id) {
   const bookDiv = document.createElement('div');
   bookDiv.classList.add('book');
   bookDiv.innerHTML = `
@@ -55,7 +68,7 @@ function renderBook(book) {
       <label class="switch">
         <input type="checkbox" ${
           book.status ? 'checked' : ''
-        } tabindex="-1" data-id="${myLibrary.length}"/>
+        } tabindex="-1" data-id="${id}"/>
         <span class="slider round"></span>
       </label>
       <i class="fa-solid fa-trash"></i>
@@ -68,8 +81,10 @@ function renderBook(book) {
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
-  renderBook(book);
+  renderBook(book, myLibrary.length);
   updateStats();
+
+  localStorage.setItem('books', JSON.stringify(myLibrary));
 }
 
 function updateStats() {
@@ -77,7 +92,7 @@ function updateStats() {
   let readCountNumber = 0;
   myLibrary.forEach((book) => {
     booksCountNumber++;
-    if (book.read) {
+    if (book.status) {
       readCountNumber++;
     }
   });
@@ -89,7 +104,9 @@ function updateStats() {
 
 function updateStatus(e) {
   const id = e.target.dataset.id;
-  myLibrary[id - 1].status = !myLibrary[id - 1].status;
+  myLibrary[id].status = !myLibrary[id].status;
+  updateStats();
+  localStorage.setItem('books', JSON.stringify(myLibrary));
 }
 
 function openModal(e) {
