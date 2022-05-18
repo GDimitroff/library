@@ -81,6 +81,10 @@ function renderBook(book, id) {
 
   bookDiv.addEventListener('click', handleClick);
   books.appendChild(bookDiv);
+
+  setTimeout(() => {
+    bookDiv.classList.add('load');
+  }, 300);
 }
 
 function addBookToLibrary(book) {
@@ -108,6 +112,7 @@ function updateStats() {
 
 function handleClick(e) {
   const id = e.currentTarget.dataset.id;
+  const bookDiv = e.currentTarget;
 
   if (e.target.classList.contains('book')) {
     return;
@@ -119,7 +124,12 @@ function handleClick(e) {
 
   if (e.target.classList.contains('fa-trash')) {
     myLibrary.splice(id, 1);
-    books.removeChild(e.currentTarget);
+
+    bookDiv.classList.remove('load');
+
+    setTimeout(() => {
+      books.removeChild(bookDiv);
+    }, 300);
   }
 
   updateStats();
