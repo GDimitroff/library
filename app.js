@@ -1,4 +1,37 @@
-let myLibrary = [];
+let myLibrary = [
+  {
+    title: 'The Lord of the Rings',
+    author: 'J. R. R. Tolkien',
+    pages: '1178',
+    language: 'English',
+    published: '1954',
+    status: true,
+  },
+  {
+    title: 'Shogun',
+    author: 'James Clavell',
+    pages: '1152',
+    language: 'English',
+    published: '1975',
+    status: true,
+  },
+  {
+    title: 'The Little Prince',
+    author: 'Antoine de Saint-Exupéry',
+    pages: '112',
+    language: 'French',
+    published: '1943',
+    status: false,
+  },
+  {
+    title: 'The Master and Margarita',
+    author: 'Mikhail Bulgakov',
+    pages: '372',
+    language: 'Russian',
+    published: '1967',
+    status: true,
+  },
+];
 
 class Book {
   constructor(title, author, pages, language, published, status) {
@@ -11,9 +44,7 @@ class Book {
   }
 }
 
-if (localStorage.getItem('books') === null) {
-  myLibrary = [];
-} else {
+if (localStorage.getItem('books') !== null) {
   myLibrary = JSON.parse(localStorage.getItem('books'));
 }
 
