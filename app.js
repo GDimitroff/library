@@ -68,9 +68,9 @@ function renderBook(book, id) {
       <h2>${book.title}</h2>
       <p>${book.author}</p>
     </header>
-    <p>Pages: ${book.pages}</p>
-    <p>Language: ${book.language}</p>
-    <p>Published: ${book.published}</p>
+    <p><span class="bold">Pages: </span>${book.pages}</p>
+    <p><span class="bold">Language:  </span>${book.language}</p>
+    <p><span class="bold">Published:  </span>${book.published}</p>
     <div>
       <label class="switch">
         <input type="checkbox" ${book.status ? 'checked' : ''} tabindex="-1"/>
@@ -80,6 +80,9 @@ function renderBook(book, id) {
     </div>
   `;
 
+  book.status
+    ? (bookDiv.style.borderBottomColor = 'var(--primary-green)')
+    : (bookDiv.style.borderBottomColor = 'var(--primary-red)');
   bookDiv.addEventListener('click', handleClick);
   books.appendChild(bookDiv);
 
@@ -124,6 +127,9 @@ function handleClick(e) {
 
   if (e.target.classList.contains('slider')) {
     myLibrary[id].status = !myLibrary[id].status;
+    myLibrary[id].status
+      ? (bookDiv.style.borderBottomColor = 'var(--primary-green)')
+      : (bookDiv.style.borderBottomColor = 'var(--primary-red)');
   }
 
   if (e.target.classList.contains('fa-trash')) {
