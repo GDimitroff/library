@@ -29,6 +29,7 @@ const readCount = body.querySelector('.read-count');
 const notReadCount = body.querySelector('.not-read-count');
 
 function loadBooks() {
+  books.innerHTML = '';
   myLibrary.forEach((book, index) => renderBook(book, index));
   updateStats();
 }
@@ -60,6 +61,7 @@ form.addEventListener('submit', (e) => {
 function renderBook(book, id) {
   const bookDiv = document.createElement('div');
   bookDiv.classList.add('book');
+  bookDiv.dataset.id = `${id}`;
   bookDiv.innerHTML = `
     <header>
       <h2>${book.title}</h2>
@@ -70,22 +72,20 @@ function renderBook(book, id) {
     <p>Published: ${book.published}</p>
     <div>
       <label class="switch">
-        <input type="checkbox" ${
-          book.status ? 'checked' : ''
-        } tabindex="-1" data-id="${id}"/>
+        <input type="checkbox" ${book.status ? 'checked' : ''} tabindex="-1"/>
         <span class="slider round"></span>
       </label>
       <i class="fa-solid fa-trash"></i>
     </div>
   `;
 
-  bookDiv.addEventListener('change', updateStatus);
+  bookDiv.addEventListener('click', handleClick);
   books.appendChild(bookDiv);
 }
 
 function addBookToLibrary(book) {
-  myLibrary.push(book);
   renderBook(book, myLibrary.length);
+  myLibrary.push(book);
   updateStats();
 
   localStorage.setItem('books', JSON.stringify(myLibrary));
@@ -106,9 +106,22 @@ function updateStats() {
   notReadCount.textContent = booksCountNumber - readCountNumber;
 }
 
-function updateStatus(e) {
-  const id = e.target.dataset.id;
-  myLibrary[id].status = !myLibrary[id].status;
+function handleClick(e) {
+  const id = e.currentTarget.dataset.id;
+
+  if (e.target.classList.contains('book')) {
+    return;
+  }
+
+  if (e.target.classList.contains('slider')) {
+    myLibrary[id].status = !myLibrary[id].status;
+  }
+
+  if (e.target.classList.contains('fa-trash')) {
+    myLibrary.splice(id, 1);
+    books.removeChild(e.currentTarget);
+  }
+
   updateStats();
   localStorage.setItem('books', JSON.stringify(myLibrary));
 }
