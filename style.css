@@ -48,6 +48,10 @@ body {
   align-items: center;
 }
 
+.logo-container {
+  flex-shrink: 1;
+}
+
 .logo {
   display: flex;
   align-items: flex-end;
@@ -64,12 +68,13 @@ body {
 }
 
 .stats {
+  flex-shrink: 0;
   display: flex;
   gap: 28px;
   background-color: var(--primary-light);
   color: var(--primary-dark);
   border-radius: 3px;
-  padding: 0.8rem 3.6rem;
+  padding: 1.4rem 3.6rem;
   user-select: none;
 }
 
@@ -377,14 +382,6 @@ input:checked + .slider:before {
 
   .header {
     gap: 18px;
-  }
-
-  .logo-container {
-    flex-shrink: 1;
-  }
-
-  .stats {
-    flex-shrink: 0;
   }
 }
 

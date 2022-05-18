@@ -27,6 +27,7 @@ const form = body.querySelector('.form');
 const booksCount = body.querySelector('.books-count');
 const readCount = body.querySelector('.read-count');
 const notReadCount = body.querySelector('.not-read-count');
+const totalPages = body.querySelector('.total-pages');
 
 function loadBooks() {
   books.innerHTML = '';
@@ -65,7 +66,7 @@ function renderBook(book, id) {
   bookDiv.innerHTML = `
     <header>
       <h2>${book.title}</h2>
-      <p>${book.author}t</p>
+      <p>${book.author}</p>
     </header>
     <p>Pages: ${book.pages}</p>
     <p>Language: ${book.language}</p>
@@ -96,10 +97,12 @@ function addBookToLibrary(book) {
 }
 
 function updateStats() {
+  let pagesCount = 0;
   let booksCountNumber = 0;
   let readCountNumber = 0;
   myLibrary.forEach((book) => {
     booksCountNumber++;
+    pagesCount += Number(book.pages);
     if (book.status) {
       readCountNumber++;
     }
@@ -108,6 +111,7 @@ function updateStats() {
   booksCount.textContent = booksCountNumber;
   readCount.textContent = readCountNumber;
   notReadCount.textContent = booksCountNumber - readCountNumber;
+  totalPages.textContent = pagesCount.toLocaleString();
 }
 
 function handleClick(e) {

@@ -45,6 +45,10 @@
           <p>Not read</p>
           <p class="not-read-count">0</p>
         </div>
+        <div class="stats-item">
+          <p>Total Pages</p>
+          <p class="total-pages">0</p>
+        </div>
       </div>
     </header>
 
@@ -78,7 +82,14 @@
             <label for="author">Author</label>
           </div>
           <div class="input">
-            <input type="tel" name="pages" id="pages" required />
+            <input
+              type="number"
+              name="pages"
+              id="pages"
+              min="1"
+              max="5000"
+              required
+            />
             <label for="pages">Pages</label>
           </div>
           <div class="input">
@@ -86,7 +97,14 @@
             <label for="language">Language</label>
           </div>
           <div class="input">
-            <input type="tel" name="published" id="published" required />
+            <input
+              type="number"
+              name="published"
+              id="published"
+              min="1500"
+              max="3000"
+              required
+            />
             <label for="published">Published</label>
           </div>
 
