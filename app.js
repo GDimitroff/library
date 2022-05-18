@@ -48,17 +48,16 @@ if (localStorage.getItem('books') !== null) {
   myLibrary = JSON.parse(localStorage.getItem('books'));
 }
 
-const body = document.querySelector('body');
-const books = body.querySelector('.books');
-const stats = body.querySelector('.stats');
-const addBtn = body.querySelector('.btn-add');
-const overlay = body.querySelector('.overlay');
-const modal = body.querySelector('.modal');
-const form = body.querySelector('.form');
-const booksCount = body.querySelector('.books-count');
-const readCount = body.querySelector('.read-count');
-const notReadCount = body.querySelector('.not-read-count');
-const totalPages = body.querySelector('.total-pages');
+const books = document.querySelector('.books');
+const stats = document.querySelector('.stats');
+const addBtn = document.querySelector('.btn-add');
+const overlay = document.querySelector('.overlay');
+const modal = document.querySelector('.modal');
+const form = document.querySelector('.form');
+const booksCount = document.querySelector('.books-count');
+const readCount = document.querySelector('.read-count');
+const notReadCount = document.querySelector('.not-read-count');
+const totalPages = document.querySelector('.total-pages');
 
 function loadBooks() {
   books.innerHTML = '';
@@ -149,12 +148,12 @@ function updateStats() {
 }
 
 function handleClick(e) {
-  const id = e.currentTarget.dataset.id;
-  const bookDiv = e.currentTarget;
-
   if (e.target.classList.contains('book')) {
     return;
   }
+
+  const id = e.currentTarget.dataset.id;
+  const bookDiv = e.currentTarget;
 
   if (e.target.classList.contains('slider')) {
     myLibrary[id].status = !myLibrary[id].status;
@@ -179,15 +178,11 @@ function handleClick(e) {
 
 function openModal(e) {
   form.children[0].children[0].focus();
-  body.style.pointerEvents = 'none';
-  body.style.overflow = 'hidden';
   overlay.classList.add('active');
   modal.classList.add('active');
 }
 
 function closeModal(e) {
-  body.style.pointerEvents = 'auto';
-  body.style.overflow = 'auto';
   overlay.classList.remove('active');
   modal.classList.remove('active');
 }
