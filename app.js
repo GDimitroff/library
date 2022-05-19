@@ -49,8 +49,8 @@ class Library {
     this.books = [];
   }
 
-  getBook(title) {
-    return this.books.find((book) => book.title === title);
+  getBook(id) {
+    return this.books[id];
   }
 
   getStats() {
@@ -121,7 +121,7 @@ form.addEventListener('submit', (e) => {
   book.status = book.status ? true : false;
 
   library.addBook(book);
-  renderBook(book, library.books.length);
+  renderBook(book, library.books.length - 1);
   updateStats();
   saveLocal();
 
@@ -179,8 +179,8 @@ function handleClick(e) {
   const bookDiv = e.currentTarget;
 
   if (e.target.classList.contains('slider')) {
-    library.books[id].status = !library.books[id].status;
-    library.books[id].status
+    library.getBook(id).status = !library.getBook(id).status;
+    library.getBook(id).status
       ? (bookDiv.style.borderBottomColor = 'var(--primary-green)')
       : (bookDiv.style.borderBottomColor = 'var(--primary-red)');
   }
