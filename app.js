@@ -1,4 +1,4 @@
-let myLibrary = [
+let mockupData = [
   {
     title: 'The Lord of the Rings',
     author: 'J. R. R. Tolkien',
@@ -44,8 +44,48 @@ class Book {
   }
 }
 
-if (localStorage.getItem('books') !== null) {
-  myLibrary = JSON.parse(localStorage.getItem('books'));
+class Library {
+  constructor() {
+    this.books = [];
+  }
+
+  getBook(title) {
+    return this.books.find((book) => book.title === title);
+  }
+
+  getStats() {
+    let booksCount = this.books.length;
+    let readCount = 0;
+    let notReadCount = 0;
+    let totalPages = 0;
+
+    this.books.forEach((book) => {
+      totalPages += Number(book.pages);
+      if (book.status) {
+        readCount++;
+      }
+    });
+
+    return { booksCount, readCount, notReadCount, totalPages };
+  }
+
+  addBook(newBook) {
+    this.books.push(newBook);
+  }
+
+  removeBook(id) {
+    this.books.splice(id, 1);
+  }
+
+  isInLibrary(newBook) {
+    return this.books.some((book) => book.title === newBook.title);
+  }
+}
+
+const library = new Library();
+
+if (localStorage.getItem('library') !== null) {
+  library.books = JSON.parse(localStorage.getItem('library'));
 }
 
 const books = document.querySelector('.books');
@@ -61,7 +101,7 @@ const totalPages = document.querySelector('.total-pages');
 
 function loadBooks() {
   books.innerHTML = '';
-  myLibrary.forEach((book, index) => renderBook(book, index));
+  library.books.forEach((book, index) => renderBook(book, index));
   updateStats();
 }
 
@@ -70,10 +110,6 @@ loadBooks();
 addBtn.addEventListener('click', openModal);
 overlay.addEventListener('click', closeModal);
 window.addEventListener('keydown', handleKeyboardInput);
-
-function handleKeyboardInput(e) {
-  if (e.key === 'Escape') closeModal();
-}
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -84,7 +120,11 @@ form.addEventListener('submit', (e) => {
   const book = new Book(title, author, pages, language, published, status);
   book.status = book.status ? true : false;
 
-  addBookToLibrary(book);
+  library.addBook(book);
+  renderBook(book, library.books.length);
+  updateStats();
+  saveLocal();
+
   form.reset();
   closeModal();
 });
@@ -121,30 +161,13 @@ function renderBook(book, id) {
   }, 300);
 }
 
-function addBookToLibrary(book) {
-  renderBook(book, myLibrary.length);
-  myLibrary.push(book);
-  updateStats();
-
-  localStorage.setItem('books', JSON.stringify(myLibrary));
-}
-
 function updateStats() {
-  let pagesCount = 0;
-  let booksCountNumber = 0;
-  let readCountNumber = 0;
-  myLibrary.forEach((book) => {
-    booksCountNumber++;
-    pagesCount += Number(book.pages);
-    if (book.status) {
-      readCountNumber++;
-    }
-  });
+  const stats = library.getStats();
 
-  booksCount.textContent = booksCountNumber;
-  readCount.textContent = readCountNumber;
-  notReadCount.textContent = booksCountNumber - readCountNumber;
-  totalPages.textContent = pagesCount.toLocaleString();
+  booksCount.textContent = stats.booksCount;
+  readCount.textContent = stats.readCount;
+  notReadCount.textContent = stats.booksCount - stats.readCount;
+  totalPages.textContent = stats.totalPages.toLocaleString();
 }
 
 function handleClick(e) {
@@ -156,15 +179,14 @@ function handleClick(e) {
   const bookDiv = e.currentTarget;
 
   if (e.target.classList.contains('slider')) {
-    myLibrary[id].status = !myLibrary[id].status;
-    myLibrary[id].status
+    library.books[id].status = !library.books[id].status;
+    library.books[id].status
       ? (bookDiv.style.borderBottomColor = 'var(--primary-green)')
       : (bookDiv.style.borderBottomColor = 'var(--primary-red)');
   }
 
   if (e.target.classList.contains('fa-trash')) {
-    myLibrary.splice(id, 1);
-
+    library.removeBook(id);
     bookDiv.classList.remove('load');
 
     setTimeout(() => {
@@ -173,7 +195,15 @@ function handleClick(e) {
   }
 
   updateStats();
-  localStorage.setItem('books', JSON.stringify(myLibrary));
+  saveLocal();
+}
+
+function handleKeyboardInput(e) {
+  if (e.key === 'Escape') closeModal();
+}
+
+function saveLocal() {
+  localStorage.setItem('library', JSON.stringify(library.books));
 }
 
 function openModal(e) {
