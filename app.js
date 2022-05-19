@@ -91,6 +91,7 @@ if (localStorage.getItem('library') !== null) {
 const books = document.querySelector('.books');
 const stats = document.querySelector('.stats');
 const addBtn = document.querySelector('.btn-add');
+const demoDataBtn = document.querySelector('.btn-demo-data');
 const overlay = document.querySelector('.overlay');
 const modal = document.querySelector('.modal');
 const form = document.querySelector('.form');
@@ -108,6 +109,7 @@ function loadBooks() {
 loadBooks();
 
 addBtn.addEventListener('click', openModal);
+demoDataBtn.addEventListener('click', loadDemoData);
 overlay.addEventListener('click', closeModal);
 window.addEventListener('keydown', handleKeyboardInput);
 
@@ -204,6 +206,11 @@ function handleKeyboardInput(e) {
 
 function saveLocal() {
   localStorage.setItem('library', JSON.stringify(library.books));
+}
+
+function loadDemoData() {
+  library.books = mockupData;
+  loadBooks();
 }
 
 function openModal(e) {

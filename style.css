@@ -97,6 +97,8 @@ body {
 }
 
 .menu {
+  display: flex;
+  justify-content: space-between;
   background-color: var(--primary-green);
   border-radius: 3px;
   padding: 1rem;
