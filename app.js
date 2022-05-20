@@ -78,7 +78,9 @@ class Library {
   }
 
   isInLibrary(newBook) {
-    return this.books.some((book) => book.title === newBook.title);
+    return this.books.some(
+      (book) => book.title.toLowerCase() === newBook.title.toLowerCase()
+    );
   }
 }
 
@@ -121,14 +123,20 @@ form.addEventListener('submit', (e) => {
   const formData = new FormData(e.target);
   const { title, author, pages, language, published, status } =
     Object.fromEntries(formData);
-  const book = new Book(title, author, pages, language, published, status);
-  book.status = book.status ? true : false;
+  const newBook = new Book(title, author, pages, language, published, status);
+  newBook.status = newBook.status ? true : false;
 
-  library.addBook(book);
-  renderBook(book, library.books.length - 1);
+  if (library.isInLibrary(newBook)) {
+    document.querySelector('.error').style.display = 'block';
+    return;
+  }
+
+  library.addBook(newBook);
+  renderBook(newBook, library.books.length - 1);
   updateStats();
   saveLocal();
 
+  document.querySelector('.error').style.display = 'none';
   form.reset();
   closeModal();
 });
