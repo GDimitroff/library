@@ -364,7 +364,7 @@ input:checked + .slider:before {
 
 .form .input input:focus ~ label,
 .form .input input:valid ~ label,
-.form .input input:invalid ~ label {
+.form .input input:invalid:not(:focus):not(:placeholder-shown) ~ label {
   top: -20px;
   left: 0;
   color: var(--primary-green);

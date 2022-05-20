@@ -98,6 +98,7 @@ const btnDeleteAll = document.querySelector('.btn-delete-all');
 const overlay = document.querySelector('.overlay');
 const modal = document.querySelector('.modal');
 const form = document.querySelector('.form');
+const errorDiv = document.querySelector('.error');
 const booksCount = document.querySelector('.books-count');
 const readCount = document.querySelector('.read-count');
 const notReadCount = document.querySelector('.not-read-count');
@@ -127,7 +128,7 @@ form.addEventListener('submit', (e) => {
   newBook.status = newBook.status ? true : false;
 
   if (library.isInLibrary(newBook)) {
-    document.querySelector('.error').style.display = 'block';
+    errorDiv.style.display = 'block';
     return;
   }
 
@@ -136,8 +137,6 @@ form.addEventListener('submit', (e) => {
   updateStats();
   saveLocal();
 
-  document.querySelector('.error').style.display = 'none';
-  form.reset();
   closeModal();
 });
 
@@ -237,6 +236,8 @@ function openModal(e) {
 }
 
 function closeModal(e) {
+  errorDiv.style.display = 'none';
+  form.reset();
   overlay.classList.remove('active');
   modal.classList.remove('active');
 }
