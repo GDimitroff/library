@@ -92,6 +92,7 @@ const books = document.querySelector('.books');
 const stats = document.querySelector('.stats');
 const addBtn = document.querySelector('.btn-add');
 const demoDataBtn = document.querySelector('.btn-demo-data');
+const btnDeleteAll = document.querySelector('.btn-delete-all');
 const overlay = document.querySelector('.overlay');
 const modal = document.querySelector('.modal');
 const form = document.querySelector('.form');
@@ -110,6 +111,7 @@ loadBooks();
 
 addBtn.addEventListener('click', openModal);
 demoDataBtn.addEventListener('click', loadDemoData);
+btnDeleteAll.addEventListener('click', handleDeleteAll);
 overlay.addEventListener('click', closeModal);
 window.addEventListener('keydown', handleKeyboardInput);
 
@@ -210,6 +212,12 @@ function saveLocal() {
 
 function loadDemoData() {
   library.books = mockupData;
+  loadBooks();
+}
+
+function handleDeleteAll() {
+  localStorage.removeItem('library');
+  library.books = [];
   loadBooks();
 }
 
