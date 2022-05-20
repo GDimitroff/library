@@ -49,8 +49,8 @@ class Library {
     this.books = [];
   }
 
-  getBook(id) {
-    return this.books[id];
+  getBook(title) {
+    return this.books.find((book) => book.title === title);
   }
 
   getStats() {
@@ -73,8 +73,8 @@ class Library {
     this.books.push(newBook);
   }
 
-  removeBook(id) {
-    this.books.splice(id, 1);
+  removeBook(title) {
+    this.books = this.books.filter((book) => book.title !== title);
   }
 
   isInLibrary(newBook) {
@@ -106,7 +106,7 @@ const totalPages = document.querySelector('.total-pages');
 
 function loadBooks() {
   books.innerHTML = '';
-  library.books.forEach((book, index) => renderBook(book, index));
+  library.books.forEach((book) => renderBook(book));
   updateStats();
 }
 
@@ -133,17 +133,16 @@ form.addEventListener('submit', (e) => {
   }
 
   library.addBook(newBook);
-  renderBook(newBook, library.books.length - 1);
+  renderBook(newBook);
   updateStats();
   saveLocal();
 
   closeModal();
 });
 
-function renderBook(book, id) {
+function renderBook(book) {
   const bookDiv = document.createElement('div');
   bookDiv.classList.add('book');
-  bookDiv.dataset.id = `${id}`;
   bookDiv.innerHTML = `
     <header>
       <h2>${book.title}</h2>
@@ -186,18 +185,18 @@ function handleClick(e) {
     return;
   }
 
-  const id = e.currentTarget.dataset.id;
   const bookDiv = e.currentTarget;
+  const title = bookDiv.children[0].children[0].textContent;
 
   if (e.target.classList.contains('slider')) {
-    library.getBook(id).status = !library.getBook(id).status;
-    library.getBook(id).status
+    library.getBook(title).status = !library.getBook(title).status;
+    library.getBook(title).status
       ? (bookDiv.style.borderBottomColor = 'var(--primary-green)')
       : (bookDiv.style.borderBottomColor = 'var(--primary-red)');
   }
 
   if (e.target.classList.contains('fa-trash')) {
-    library.removeBook(id);
+    library.removeBook(title);
     bookDiv.classList.remove('load');
 
     setTimeout(() => {
@@ -224,9 +223,15 @@ function loadDemoData() {
 }
 
 function handleDeleteAll() {
-  localStorage.removeItem('library');
-  library.books = [];
-  loadBooks();
+  Array.from(books.children).forEach((book) => {
+    book.classList.remove('load');
+  });
+
+  setTimeout(() => {
+    localStorage.removeItem('library');
+    library.books = [];
+    loadBooks();
+  }, 300);
 }
 
 function openModal(e) {
