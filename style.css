@@ -78,8 +78,9 @@ body {
   user-select: none;
 }
 
-.stats > div {
+.stats-item {
   text-align: center;
+  min-width: 7rem;
 }
 
 .stats > div:not(:last-child) {
@@ -433,6 +434,13 @@ input:checked + .slider:before {
 @media (max-width: 34em) {
   html {
     font-size: 50%;
+  }
+
+  .stats-item {
+    min-width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .modal {

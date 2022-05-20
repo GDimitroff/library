@@ -211,7 +211,8 @@ function saveLocal() {
 }
 
 function loadDemoData() {
-  library.books = mockupData;
+  localStorage.removeItem('library');
+  library.books = mockupData.slice();
   loadBooks();
 }
 
